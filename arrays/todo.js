@@ -17,3 +17,17 @@ todos.push('added new item at the end')
 todos.shift()
 
 console.log(todos)
+
+todos.forEach(function (item, index) {
+    console.log(`${index + 1}. ${item}`)
+})
+
+console.log('')
+
+for (let index = 0; index < todos.length; index++) {
+    console.log(`${index + 1}. ${todos[index]}`)
+}
+
+console.log('')
+
+console.log(todos.indexOf('Bake the Cake'))
