@@ -4,6 +4,10 @@ const todos = [
     completed: true,
   },
   {
+    text: "Order from Amazon",
+    completed: false,
+  },
+  {
     text: "Clean the kitchen",
     completed: true,
   },
@@ -17,34 +21,54 @@ const todos = [
   },
 ];
 
-// Print a summary: You have 2 todos left in  p element
-const incompleteTodos = todos.filter(function(todo) {
-    return !todo.completed
+const filters = {
+  searchText: "",
+  hideCompleted: false
+};
+
+const renderTodos = function (todos, filters) {
+  const filteredTodos = todos.filter(function (todo) {
+    const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
+    const hideCompletedMatch = !filters.hideCompleted || !todo.completed
+    return searchTextMatch && hideCompletedMatch;
+  });
+
+  document.querySelector("#todos").innerHTML = "";
+
+  const incompleteTodos = filteredTodos.filter(function (todo) {
+    return !todo.completed;
+  });
+
+  const summary = document.createElement("h2");
+  summary.textContent = `You have ${incompleteTodos.length} todos left`;
+  document.querySelector("#todos").appendChild(summary);
+
+  filteredTodos.forEach(function (todo) {
+    const p = document.createElement("p");
+    p.textContent = todo.text;
+    document.querySelector("#todos").appendChild(p);
+  });
+};
+
+renderTodos(todos, filters);
+
+document.querySelector("#search-todos").addEventListener("input", function (e) {
+  filters.searchText = e.target.value;
+  renderTodos(todos, filters);
+});
+
+document.querySelector("#add-todo-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  console.log(e);
+  todos.push({
+    text: e.target.elements.addTodo.value,
+    completed: false,
+  });
+  renderTodos(todos, filters)
+  e.target.elements.addTodo.value = ''
+});
+
+document.querySelector("#hide-completed").addEventListener("change", function(e) {
+  filters.hideCompleted = e.target.checked
+  renderTodos(todos, filters)
 })
-
-const summary = document.createElement('h2')
-summary.textContent = `You have ${incompleteTodos.length} todos left`
-document.querySelector('body').appendChild(summary)
-
-// Add a p for each todo above text value of the object as visible element
-todos.forEach(function(todo) {
-    const p = document.createElement('p')
-    p.textContent = todo.text
-    document.querySelector('body').appendChild(p)
-})
-
-document.querySelector('#add-button').addEventListener('click', function(event) {
-    console.log('Button Clickend \n', event)
-})
-
-document.querySelector("#add-todo").addEventListener("input", function (e) {
-  console.log(e.target.value)
-})
-
-// const ps = document.querySelectorAll('p')
-
-// ps.forEach(function (p) {
-//     if (p.textContent.includes('the')) {
-//         p.remove()
-//     }
-// })
