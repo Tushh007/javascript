@@ -33,8 +33,12 @@ todos.forEach(function(todo) {
     document.querySelector('body').appendChild(p)
 })
 
-document.querySelector('button').addEventListener('click', function(event) {
+document.querySelector('#add-button').addEventListener('click', function(event) {
     console.log('Button Clickend \n', event)
+})
+
+document.querySelector("#add-todo").addEventListener("input", function (e) {
+  console.log(e.target.value)
 })
 
 // const ps = document.querySelectorAll('p')
