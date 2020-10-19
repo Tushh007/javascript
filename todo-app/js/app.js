@@ -18,6 +18,7 @@ document
     e.preventDefault();
 
     todos.push({
+      id: uuidv4(),
       text: e.target.elements.addTodo.value,
       completed: false,
     });

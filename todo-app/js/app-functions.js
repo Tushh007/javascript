@@ -36,6 +36,16 @@ const renderTodos = function (todos, filters) {
   });
 };
 
+// Remove todo my id
+const removeTodo = function (id) {
+  let todoIndex = todos.findIndex(function (todo) {
+    return todo.id === id
+  })
+  if (todoIndex > -1) {
+    todos.splice(todoIndex, 1)
+  }
+}
+
 // Get the DOM elements from the existing note
 const generateTodoDOM = function (todo) {
   const todoEl = document.createElement("div");
@@ -54,6 +64,11 @@ const generateTodoDOM = function (todo) {
   const buttonEl = document.createElement("button")
   buttonEl.textContent = "x"
   todoEl.appendChild(buttonEl)
+  buttonEl.addEventListener("click", function () {
+    removeTodo(todo.id);
+    saveTodos(todos);
+    renderTodos(todos, filters);
+  })
 
   return todoEl ;
 };
