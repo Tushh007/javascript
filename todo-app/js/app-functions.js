@@ -36,14 +36,25 @@ const renderTodos = function (todos, filters) {
   });
 };
 
-// Remove todo my id
+// Remove todo by id
 const removeTodo = function (id) {
-  let todoIndex = todos.findIndex(function (todo) {
+  const todoIndex = todos.findIndex(function (todo) {
     return todo.id === id
   })
   if (todoIndex > -1) {
     todos.splice(todoIndex, 1)
   }
+}
+
+// Set completed status
+const todoStatus = function (id) {
+    const todo = todos.find(function (todo) {
+      return todo.id === id
+    })
+
+    if (todo !== undefined) {
+      todo.completed = !todo.completed
+    }
 }
 
 // Get the DOM elements from the existing note
@@ -53,8 +64,14 @@ const generateTodoDOM = function (todo) {
   // Setup the todo checkbox element
   const checkboxEl = document.createElement("input")
   checkboxEl.setAttribute("type", "checkbox")
+  checkboxEl.checked = todo.completed
   todoEl.appendChild(checkboxEl)
-  
+  checkboxEl.addEventListener("change", function (e) {
+    todoStatus(todo.id);
+    saveTodos(todos);
+    renderTodos(todos, filters);
+  })
+
   // Setup the todo text element
   const textEl = document.createElement("span");
   textEl.textContent = todo.text;
