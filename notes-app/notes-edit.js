@@ -36,7 +36,7 @@ noteBody.addEventListener("input", (e) => {
 })
 
 // remove note button
-removeButton.addEventListener("click", () => {
+removeButton.addEventListener("click", (e) => {
     removeNote(note.id)
     saveNotes(notes)
     location.assign("/index.html")
