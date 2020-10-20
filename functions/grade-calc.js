@@ -1,4 +1,8 @@
 const gradeCalculator = function (studentScore, totalScore) {
+    if (typeof studentScore !== 'number' || typeof totalScore !== 'number') {
+        throw Error('Please provide numbers only!')
+    }
+
     const percent = (studentScore / totalScore) * 100
     let letterGrade = ''
 
@@ -14,14 +18,16 @@ const gradeCalculator = function (studentScore, totalScore) {
         if (percent < 60) {
             letterGrade = 'F'
         } else {
-            return 'Invalid scores entered!'
+            throw Error('Invalid scores entered!')
         }
     }
 
     return `You have got a ${letterGrade} (${percent}%)!`
 }
 
-
-const result = gradeCalculator(25, 20)
-
-console.log(result)
+try {
+    const result = gradeCalculator(70, 100)
+    console.log(result)
+} catch (e) {
+    console.log(e)
+}

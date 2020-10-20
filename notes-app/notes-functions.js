@@ -1,8 +1,15 @@
-//  read existing notes from local storage
+'use strict'
+
+//  Read existing notes from local storage
 const getSavedNotes = () => {
-  // check for existing notes data
   const notesJSON = localStorage.getItem("notes");
-  return notesJSON ? JSON.parse(notesJSON) : []
+
+  try {
+    return notesJSON ? JSON.parse(notesJSON) : []
+  } catch (e) {
+    return []
+  }
+  
 };
 
 // Save the notes to localStorage
@@ -10,7 +17,7 @@ const saveNotes = (notes) => {
   localStorage.setItem("notes", JSON.stringify(notes));
 };
 
-// remove a note from the list
+// Remove a note from the list
 const removeNote = (id) => {
   const noteIndex = notes.findIndex((note) => note.id === id);
 
@@ -19,7 +26,7 @@ const removeNote = (id) => {
   }
 };
 
-// generate the DOM structure for a note
+// Generate the DOM structure for a note
 const generateNoteDOM = (note) => {
   const noteEl = document.createElement("div");
 
@@ -46,7 +53,7 @@ const generateNoteDOM = (note) => {
   return noteEl;
 };
 
-// sort your notes by one of the three ways
+// Sort your notes by one of the three ways
 const sortNotes = (notes, sortBy) => {
   if (sortBy === "byEdited") {
     return notes.sort((a, b) => {
