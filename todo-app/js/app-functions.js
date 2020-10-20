@@ -29,7 +29,9 @@ const renderTodos = (todos, filters) => {
   document.querySelector("#todos").innerHTML = "";
   document.querySelector("#todos").appendChild(generateSummaryDOM(incompleteTodos));
 
-  filteredTodos.forEach((todo) => document.querySelector("#todos").appendChild(generateTodoDOM(todo)));
+  filteredTodos.forEach((todo) => {
+    document.querySelector("#todos").appendChild(generateTodoDOM(todo))
+  });
 };
 
 // Remove todo by id
