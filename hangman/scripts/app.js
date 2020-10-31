@@ -1,10 +1,16 @@
 let game;
 const puzzleEl = document.querySelector("#puzzle");
-const remainingGuessEl = document.querySelector("#remaining-guess");
+const remainingGuessEl = document.querySelector("#guesses");
 
 const render = () => {
-  puzzleEl.textContent = game.Puzzle;
+  puzzleEl.innerHTML = '';
   remainingGuessEl.textContent = game.StatusMessage;
+
+  game.Puzzle.split('').forEach((letter) => {
+    const letterEl = document.createElement('span')
+    letterEl.textContent = letter
+    puzzleEl.appendChild(letterEl)
+  })
 };
 
 window.addEventListener("keypress", (e) => {
@@ -24,20 +30,6 @@ const startGame = async () => {
 document.querySelector("#reset").addEventListener("click", startGame);
 
 startGame();
-
-// getPuzzle("2")
-//   .then((puzzle) => {
-//     console.log(puzzle);
-//   })
-//   .catch((err) => {
-//     console.log(`Error: ${err}`);
-//   });
-
-// getCurrentCountry().then((country) => {
-//   console.log(country)
-// }).catch((err) => {
-//   console.log(err)
-// })
 
 // Notes
 // Primitive values: string, number, boolean, null, undefined,
